@@ -43,7 +43,7 @@ resource "aws_security_group" "prometheus_sg" {
 }
 
 resource "aws_instance" "prometheus_instance" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-076fe60835f136dc9"
   instance_type = var.instance_type
 
   vpc_security_group_ids = [aws_security_group.prometheus_sg.id]

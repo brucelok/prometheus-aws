@@ -5,15 +5,15 @@ variable "aws_region" {
 
 variable "instance_type" {
   description = "Instance type"
-  default     = "t2.micro"
+  default     = "t2.small"
 }
 
 variable "key_name" {
   description = "Key pair"
-  default     = "mykey"
+  default     = "myMacbook"
 }
 
 variable "subnet_id" {
   description = "Default"
-  default    = "subnet-id"
+  default    = "subnet-0f72be4624adad8ff"
 }
