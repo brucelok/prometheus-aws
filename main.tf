@@ -42,6 +42,15 @@ resource "aws_security_group" "prometheus_sg" {
   }
 }
 
+resource "aws_eip" "prometheus_eip" {
+  vpc = true
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.prometheus_instance.id
+  allocation_id = aws_eip.prometheus_eip.id
+}
+
 resource "aws_instance" "prometheus_instance" {
   ami           = "ami-076fe60835f136dc9"
   instance_type = var.instance_type
@@ -55,6 +64,6 @@ resource "aws_instance" "prometheus_instance" {
   }
 
   key_name = var.key_name
-  associate_public_ip_address = true
+  # associate_public_ip_address = true
   subnet_id = var.subnet_id
 }
