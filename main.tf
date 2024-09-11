@@ -52,7 +52,7 @@ resource "aws_eip_association" "eip_assoc" {
 }
 
 resource "aws_instance" "prometheus_instance" {
-  ami           = "ami-076fe60835f136dc9"
+  ami           = "ami-0892a9c01908fafd1"
   instance_type = var.instance_type
 
   vpc_security_group_ids = [aws_security_group.prometheus_sg.id]

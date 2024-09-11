@@ -1,4 +1,4 @@
-variable "aws_region" {
+variable "region" {
   description = "default region"
   default     = "ap-southeast-2"
 }
