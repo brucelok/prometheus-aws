@@ -14,20 +14,27 @@ provider "aws" {
 
 resource "aws_security_group" "promo_sg" {
   name        = "promo_sg"
-  description = "Allow inbound traffic for Prometheus"
+  description = "Allow inbound traffic for Prometheus and Grafana"
 
   ingress {
     from_port   = 9090
     to_port     = 9090
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.whitelist_ip]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = [var.whitelist_ip]
   }
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.whitelist_ip]
   }
 
   egress {
@@ -53,7 +60,7 @@ resource "aws_instance" "promo_server" {
 
   vpc_security_group_ids = [aws_security_group.promo_sg.id]
 
-  # user_data = file("${path.module}/userdata.tpl")
+  user_data = file("${path.module}/userdata.tpl")
 
   tags = {
     Name = "Prometheus-Server"
