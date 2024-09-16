@@ -12,8 +12,8 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_security_group" "prometheus_sg" {
-  name        = "prometheus_security_group"
+resource "aws_security_group" "promo_sg" {
+  name        = "promo_sg"
   description = "Allow inbound traffic for Prometheus"
 
   ingress {
@@ -38,26 +38,22 @@ resource "aws_security_group" "prometheus_sg" {
   }
 
   tags = {
-    Name = "prometheus-sg"
+    Name = "promo-sg"
   }
 }
 
-resource "aws_eip" "prometheus_eip" {
-  vpc = true
+resource "aws_eip" "promo_eip" {
+  domain   = "vpc"
+  instance = aws_instance.promo_server.id
 }
 
-resource "aws_eip_association" "eip_assoc" {
-  instance_id   = aws_instance.prometheus_instance.id
-  allocation_id = aws_eip.prometheus_eip.id
-}
-
-resource "aws_instance" "prometheus_instance" {
+resource "aws_instance" "promo_server" {
   ami           = "ami-0892a9c01908fafd1"
   instance_type = var.instance_type
 
-  vpc_security_group_ids = [aws_security_group.prometheus_sg.id]
+  vpc_security_group_ids = [aws_security_group.promo_sg.id]
 
-  user_data = file("${path.module}/userdata.tpl")
+  # user_data = file("${path.module}/userdata.tpl")
 
   tags = {
     Name = "Prometheus-Server"
@@ -66,4 +62,8 @@ resource "aws_instance" "prometheus_instance" {
   key_name = var.key_name
   # associate_public_ip_address = true
   subnet_id = var.subnet_id
+}
+
+output "public_ip" {
+  value = aws_instance.promo_server.public_ip
 }

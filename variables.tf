@@ -15,5 +15,5 @@ variable "key_name" {
 
 variable "subnet_id" {
   description = "Default"
-  default    = "subnet-0f72be4624adad8ff"
+  default     = "subnet-0f72be4624adad8ff"
 }
