@@ -21,17 +21,6 @@ cp /etc/prometheus/prometheus /usr/local/bin/
 cp /etc/prometheus/promtool /usr/local/bin/
 chown prometheus:prometheus /usr/local/bin/prometheus /usr/local/bin/promtool
 
-# append config for TFE, change the targets to your TFE instance
-cat <<EOT >> /etc/prometheus/prometheus.yml
-  - job_name: 'TFE'
-    scheme: https
-    static_configs:
-      - targets: ['www.example.com:9091']
-    metrics_path: /metrics
-    params:
-      format: ['prometheus']
-EOT
-
 # ensure the config file ownership
 chown prometheus:prometheus /etc/prometheus/prometheus.yml
 
