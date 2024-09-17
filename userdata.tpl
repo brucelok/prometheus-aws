@@ -4,7 +4,7 @@ PROMETHEUS_VERSION="2.54.1"
 
 # Update and install the packages
 apt-get update -y
-apt-get install -y wget tar apt-transport-https software-properties-common
+apt-get install -y wget tar apt-transport-https software-properties-common net-tools
 
 # Download and install Prometheus
 wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
